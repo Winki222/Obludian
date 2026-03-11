@@ -1,0 +1,8 @@
+config.json
+venv/
+db/
+__pycache__/
+*.gguf
+*.pyc
+.env
+screenshots/

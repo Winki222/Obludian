@@ -1,0 +1,27 @@
+{
+    "vault_path": "/path/to/your/obsidian/vault",
+    "new_notes_folder": "Lite note",
+    "skip_folders": ["Archive", ".obsidian", ".trash"],
+    "telegram": {
+        "bot_token": "YOUR_BOT_TOKEN_FROM_BOTFATHER",
+        "my_id": 123456789,
+        "reminder_time": "10:00",
+        "reminder_days": 3
+    },
+    "llm": {
+        "backend": "llamacpp",
+        "gguf_path": "model.gguf",
+        "ollama_url": "http://localhost:11434",
+        "model": "qwen3:0.6b",
+        "max_tokens": 512,
+        "temperature": 0.1
+    },
+    "embeddings": {
+        "model": "sentence-transformers/all-MiniLM-L6-v2",
+        "batch_size": 8
+    },
+    "indexer": {
+        "chunk_size": 400,
+        "chunk_overlap": 60
+    }
+}
