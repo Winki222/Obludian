@@ -27,7 +27,7 @@
 
 **1. Клонировать репозиторий**
 ```bash
-git clone https://github.com/ВАШ_ЛОГИН/obsidian-agent
+git clone https://github.com/Winki222/Obludian
 cd obsidian-agent
 ```
 
