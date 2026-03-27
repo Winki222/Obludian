@@ -1,37 +1,37 @@
+```markdown
 # Obsidian RAG Agent
 
-Локальный AI-ассистент для Obsidian vault. Отвечает на вопросы по твоим заметкам, находит связи между ними и напоминает о давно забытых записях — всё через Telegram.
+A local AI assistant for your Obsidian vault. Answers questions about your notes,
+finds connections between them, and reminds you about long-forgotten entries — all via Telegram.
 
-![demo](screenshots/demo.jpg)
+## Features
 
-## Возможности
+- `/ask [question]` — query your knowledge base
+- `/connections [file.md]` — find thematically related notes
+- `/stale` — show notes that haven't been edited in a while
+- `/new` — create a new note directly from Telegram
+- `/reindex` — rebuild the index after changes to your vault
+- Daily reminders about old notes
 
-- `/ask [вопрос]` — задать вопрос по базе знаний
-- `/connections [файл.md]` — найти тематически связанные заметки
-- `/stale` — показать заметки которые давно не редактировались
-- `/new` — создать новую заметку прямо из Telegram
-- `/reindex` — обновить индекс после изменений в vault
-- Ежедневные напоминания о старых заметках
+## Stack
 
-## Стек
+| Component     | Technology                              |
+|---------------|-----------------------------------------|
+| Embeddings    | sentence-transformers (all-MiniLM-L6-v2)|
+| Vector DB     | ChromaDB                                |
+| LLM           | llama.cpp (local) or ollama             |
+| Telegram bot  | aiogram 3                               |
+| Scheduler     | APScheduler                             |
 
-| Компонент | Технология |
-|---|---|
-| Эмбеддинги | sentence-transformers (all-MiniLM-L6-v2) |
-| Векторная БД | ChromaDB |
-| LLM | llama.cpp (локально) или ollama |
-| Telegram бот | aiogram 3 |
-| Планировщик | APScheduler |
+## Installation
 
-## Установка
-
-**1. Клонировать репозиторий**
+**1. Clone the repository**
 ```bash
 git clone https://github.com/Winki222/Obludian
 cd obsidian-agent
 ```
 
-**2. Создать виртуальное окружение**
+**2. Create a virtual environment**
 ```bash
 # Linux / macOS / Termux
 python3 -m venv venv
@@ -42,27 +42,28 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-**3. Установить зависимости**
+**3. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**4. Настроить config.json**
+**4. Configure config.json**
 ```bash
 cp config.example.json config.json
 ```
-Заполни поля:
-- `vault_path` — путь к папке Obsidian vault
-- `bot_token` — токен от @BotFather
-- `my_id` — твой Telegram ID (узнай у @userinfobot)
-- `gguf_path` — путь к .gguf модели
 
-**5. Проиндексировать заметки**
+Fill in the fields:
+- `vault_path` — path to your Obsidian vault folder
+- `bot_token` — token from @BotFather
+- `my_id` — your Telegram ID (get it from @userinfobot)
+- `gguf_path` — path to your `.gguf` model file
+
+**5. Index your notes**
 ```bash
 python -c "from core.config import load_config; from core.indexer import Indexer; Indexer(load_config()).index()"
 ```
 
-**6. Запустить бота**
+**6. Run the bot**
 ```bash
 python -m bot.bot
 ```
@@ -74,28 +75,30 @@ pkg update && pkg install python
 termux-setup-storage
 pip install -r requirements.txt
 ```
-Vault должен находиться в `/sdcard/`. Добавь `termux-wake-lock` в скрипт запуска чтобы бот не засыпал.
 
-## ⚙️ Структура проекта
+Your vault should be located in `/sdcard/`. Add `termux-wake-lock` to your startup
+script to prevent the bot from sleeping.
+
+## ⚙️ Project Structure
 
 ```
 obsidian-agent/
-├── config.json          # настройки (не в git!)
-├── config.example.json  # пример настроек
+├── config.json          # your config (not in git!)
+├── config.example.json  # example config
 ├── core/
-│   ├── config.py        # загрузка конфига
-│   ├── indexer.py       # индексация заметок
-│   ├── retriever.py     # поиск по смыслу
-│   ├── llm.py           # локальная LLM
-│   └── agent.py         # логика агента
+│   ├── config.py        # config loader
+│   ├── indexer.py       # note indexer
+│   ├── retriever.py     # semantic search
+│   ├── llm.py           # local LLM
+│   └── agent.py         # agent logic
 └── bot/
-    ├── bot.py           # точка входа
-    ├── handlers.py      # команды бота
-    └── scheduler.py     # напоминания
+    ├── bot.py           # entry point
+    ├── handlers.py      # bot commands
+    └── scheduler.py     # reminders
 ```
 
-## 🔒 Безопасность
+## 🔒 Privacy
 
-Бот отвечает только на сообщения от твоего Telegram ID. Все данные хранятся локально — никаких облаков.
-
-
+The bot only responds to messages from your Telegram ID.
+All data is stored locally — no cloud involved.
+```
